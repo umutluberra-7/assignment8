@@ -7,6 +7,15 @@ app.get('/hello', (req, res) => {
   res.send("Hello from Berra Ceyda Umutlu's server");
 });
 
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nDisallow: /api/admin\n');
+});
+
+app.get('/old-page', (req, res) => {
+  res.redirect(301, '/hello');
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
