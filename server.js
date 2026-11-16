@@ -9,6 +9,14 @@ const courses = [
   { id: 3, title: 'User Interface Design', credits: 4 },
   { id: 4, title: 'Software Engineering', credits: 6 }
 ];
+
+function requestLogger(req, res, next) {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${req.method} ${req.originalUrl}`);
+  next();
+}
+
+app.use(requestLogger);
 app.get('/hello', (req, res) => {
   res.send("Hello from Berra Ceyda Umutlu's server");
 });
