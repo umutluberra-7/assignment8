@@ -15,9 +15,18 @@ function requestLogger(req, res, next) {
   console.log(`[${timestamp}] ${req.method} ${req.originalUrl}`);
   next();
 }
+let requestCount = 0;
+
+function requestCounter(req, res, next) {
+  requestCount += 1;
+  next();
+}
+
 
 app.use(requestLogger);
+app.use(requestCounter);
 app.get('/hello', (req, res) => {
+  res.type('text/plain');
   res.send("Hello from Berra Ceyda Umutlu's server");
 });
 
@@ -55,6 +64,9 @@ app.post('/api/subscribe', (req, res) => {
 
 app.get('/api/admin', (req, res) => {
   res.status(403).json({ error: 'Forbidden' });
+});
+app.get('/api/stats', (req, res) => {
+  res.json({ requestsServed: requestCount });
 });
 
 app.listen(PORT, () => {
