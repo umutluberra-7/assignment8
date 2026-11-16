@@ -4,7 +4,7 @@ A small Node.js and Express 5 server for a made-up study programme
 (Bachelor of Web Engineering). It serves a web page, several API routes
 (text, JSON, redirect, errors) and logs and counts every request.
 
-Author: Berra Ceyda Umutlu
+Author: Berra Ceyda Umutlu 230408024 
 
 ## How to install and run
 
@@ -53,3 +53,104 @@ assignment8/
 | `GET /api/admin` | `403` with `{ "error": "Forbidden" }` |
 | `GET /api/stats` | JSON with the number of requests served |
 | anything else | `404`: JSON for `/api/...` paths, plain text otherwise |
+
+## Testing evidence (curl)
+
+All tests were run with `curl --include` while the server was running on port 3000.
+
+### 1. Successful JSON response – `GET /api/courses`
+
+```
+$ curl --include http://localhost:3000/api/courses
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 210
+ETag: W/"d2-97/Qj4jU+/duQd/5jI6Vh4gq5RQ"
+Date: Mon, 16 Nov 2026 16:00:06 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+[{"id":1,"title":"Introduction to Web Programming","credits":6},{"id":2,"title":"Databases","credits":5},{"id":3,"title":"User Interface Design","credits":4},{"id":4,"title":"Software Engineering","credits":6}]
+```
+
+### 2. Created – `POST /api/subscribe`
+
+```
+$ curl --include -X POST http://localhost:3000/api/subscribe
+HTTP/1.1 201 Created
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 19
+ETag: W/"13-oWAPIqDXuocNexKhPYW9ayyk98c"
+Date: Sun, 15 Nov 2026 12:03:28 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"subscribed":true}
+```
+
+### 3. Forbidden – `GET /api/admin`
+
+```
+$ curl --include http://localhost:3000/api/admin
+HTTP/1.1 403 Forbidden
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 21
+ETag: W/"15-TLNzmZqKxaTuFdX/dVWWPBu44/c"
+Date: Sun, 15 Nov 2026 12:03:37 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Forbidden"}
+```
+
+### 4. Redirect – `GET /old-page`
+
+```
+$ curl --include http://localhost:3000/old-page
+HTTP/1.1 301 Moved Permanently
+X-Powered-By: Express
+Location: /hello
+Vary: Accept
+Content-Type: text/plain; charset=utf-8
+Content-Length: 40
+Date: Sat, 14 Nov 2026 19:57:43 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+Moved Permanently. Redirecting to /hello
+```
+
+### 5. 404 on an API path – `GET /api/not-exist`
+
+```
+$ curl --include http://localhost:3000/api/not-exist
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 21
+ETag: W/"15-bm7tJgu8FHlq5QU+Y6gDxOGPfRc"
+Date: Mon, 16 Nov 2026 15:59:50 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Not found"}
+```
+
+### 6. 404 on a non-API path – `GET /not-exist`
+
+```
+$ curl --include http://localhost:3000/not-exist
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Type: text/plain; charset=utf-8
+Content-Length: 20
+ETag: W/"14-uqvetqrE8oeY4r2Xn8/CTahXnYE"
+Date: Mon, 16 Nov 2026 15:59:57 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+404 - Page not found
+```
