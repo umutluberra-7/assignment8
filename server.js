@@ -1,6 +1,7 @@
 import express from 'express';
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
 const courses = [
@@ -68,6 +69,16 @@ app.get('/api/admin', (req, res) => {
 app.get('/api/stats', (req, res) => {
   res.json({ requestsServed: requestCount });
 });
+
+app.use((req, res) => {
+  if (req.path.startsWith('/api')) {
+    res.status(404).json({ error: 'Not found' });
+    return;
+  }
+  res.status(404).type('text/plain').send('404 - Page not found');
+}); 
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
