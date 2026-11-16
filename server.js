@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'node:path';
 
 const app = express();
 
@@ -26,6 +27,7 @@ function requestCounter(req, res, next) {
 
 app.use(requestLogger);
 app.use(requestCounter);
+app.use(express.static(path.join(import.meta.dirname, 'public')));
 app.get('/hello', (req, res) => {
   res.type('text/plain');
   res.send("Hello from Berra Ceyda Umutlu's server");

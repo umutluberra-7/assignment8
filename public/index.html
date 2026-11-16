@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Engineering Programme</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Bachelor of Web Engineering</h1>
+    <p class="subtitle">Information server</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>About the programme</h2>
+      <p>
+        The Bachelor of Web Engineering is a three-year programme that teaches
+        students how to build modern websites and web applications. Students
+        learn both the front-end (HTML, CSS, JavaScript) and the back-end
+        (Node.js, Express, databases). Every semester ends with a team project
+        built for a real client.
+      </p>
+    </section>
+
+    <section>
+      <h2>Try the API</h2>
+      <p>Click a button to send a request to this server and see the response.</p>
+
+      <div class="buttons">
+        <button data-method="GET" data-url="/api/courses">GET /api/courses</button>
+        <button data-method="GET" data-url="/api/status">GET /api/status</button>
+        <button data-method="GET" data-url="/api/headers">GET /api/headers</button>
+        <button data-method="POST" data-url="/api/subscribe">POST /api/subscribe</button>
+        <button data-method="GET" data-url="/api/admin">GET /api/admin</button>
+        <button data-method="GET" data-url="/api/stats">GET /api/stats</button>
+        <button data-method="GET" data-url="/api/does-not-exist">GET /api/does-not-exist</button>
+      </div>
+
+      <p class="status-line">Status: <span id="status">-</span></p>
+      <pre id="output">No request sent yet.</pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
